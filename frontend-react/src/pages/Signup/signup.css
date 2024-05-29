@@ -1,0 +1,19 @@
+.role-select input {
+  display: none;
+}
+
+.role-select input:checked+label {
+  border-color: #1976d2;
+  background-color: #def;
+}
+
+.role-select label {
+  border-radius: 4px;
+  transition: .3s;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  padding: 12px;
+  box-shadow: 1px 1px 3px gray;
+  border: 1px solid lightgrey;
+}
