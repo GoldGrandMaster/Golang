@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import Appbar from "../components/Appbar";
+import AppAppBar from "../components/AppAppbar";
 
 export default function WithAppbar() {
   return <>
-    <Appbar />
+    <AppAppBar />
     <Outlet />
   </>
 }
