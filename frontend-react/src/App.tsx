@@ -5,6 +5,7 @@ import Signup from "./pages/Signup/Signup"
 import NotFound from "./pages/NotFound"
 import AuthProvider from "./providers/AuthProvider"
 import PrivateRoutes from "./layouts/PrivateRoutes"
+import WithAppbar from "./layouts/WithAppbar"
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
         <Route path="/login" element={<Signin />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/home" element={<PrivateRoutes />}>
-          <Route path="/home" element={<Home/>}/>
+          <Route path="/home" element={<WithAppbar />}>
+            <Route path="/home/" element={<Home/>} />
+          </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
