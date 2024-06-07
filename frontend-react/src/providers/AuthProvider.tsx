@@ -48,15 +48,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const logout = () => {
-    Axios.post("/auth/logout", { refreshToken: localStorage.getItem("refreshToken") })
-      .then(() => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        setUser(null);
-        setIsLoggedIn(false);
-      }).catch(err => {
-        console.error(err);
-      })
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    setUser(null);
+    setIsLoggedIn(false);
   }
 
   useEffect(() => {

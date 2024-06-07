@@ -10,9 +10,21 @@ import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import BackgroundImage from '../assets/123.png';
 import Footer from '../components/Footer';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
 interface Column {
-  id: 'name' | 'code' | 'population' | 'size' | 'density';
+  id: 'owner' | 'app_number' | 'date_created' | 'statements';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -20,25 +32,18 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+  { id: 'owner', label: 'OWNER', minWidth: 170 },
+  { id: 'app_number', label: 'APP\u00a0NUMBER', minWidth: 100 },
   {
-    id: 'population',
-    label: 'Population',
+    id: 'date_created',
+    label: 'Date\u00a0Created',
     minWidth: 170,
     align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'density',
-    label: 'Density',
+    id: 'statements',
+    label: 'STATEMENTS',
     minWidth: 170,
     align: 'right',
     format: (value: number) => value.toFixed(2),
@@ -46,21 +51,19 @@ const columns: readonly Column[] = [
 ];
 
 interface Data {
-  name: string;
-  code: string;
-  population: number;
-  size: number;
-  density: number;
+  owner: string;
+  app_number: string;
+  date_created: number;
+  statements: number;
 }
 
 function createData(
-  name: string,
-  code: string,
-  population: number,
-  size: number,
+  owner: string,
+  app_number: string,
+  date_created: number,
+  statements: number
 ): Data {
-  const density = population / size;
-  return { name, code, population, size, density };
+  return { owner, app_number, date_created, statements };
 }
 
 const rows = [
@@ -85,6 +88,21 @@ export default function Home() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  }
+
+  // const afterOpenModal = () => {
+  //   // references are now sync'd and can be accessed.
+  //   subtitle.style.color = '#f00';
+  // }
+
+  const closeModal = () => {
+    setIsOpen(false);
+  }
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -96,12 +114,13 @@ export default function Home() {
 
   return (
     <>
-      <div style={{ backgroundImage: `url(${BackgroundImage})`, height: '50vh', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div style={{ backgroundImage: `url(${BackgroundImage})`, height: '90vh', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '20vh' }}>
-        <Button variant="contained" color="success">
+        <Button variant="contained" color="success" onClick={openModal}>
           NEW APPLICATION
         </Button>
+
       </div>
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer>
@@ -152,6 +171,23 @@ export default function Home() {
         />
       </Paper>
       <Footer />
+      <Modal
+        isOpen={modalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <button onClick={closeModal}>close</button>
+        <div>I am a modal</div>
+        <form>
+          <input />
+          <button>tab navigation</button>
+          <button>stays</button>
+          <button>inside</button>
+          <button>the modal</button>
+        </form>
+      </Modal>
     </>
   );
 }
