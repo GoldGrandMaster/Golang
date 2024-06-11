@@ -29,7 +29,9 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"data": "hello world! THis is Golang!"})
 	})
 	router.POST("/api/auth/register", controllers.CreateUser)
-	router.POST("/api/auth/login", controllers.Login)
+	router.POST("/api/auth/login", controllers.LoginUser)
+	// router.Post("/api/pdf/create", controllers.)
+
 	router.GET("/user/profile", middlewares.CheckAuth, controllers.GetUserProfile)
 	router.Run()
 }
