@@ -11,6 +11,8 @@ import Button from '@mui/material/Button';
 import BackgroundImage from '../assets/123.png';
 import Footer from '../components/Footer';
 import Modal from 'react-modal';
+import { Margin } from '@mui/icons-material';
+import './Home.css';
 
 const customStyles = {
   content: {
@@ -20,6 +22,10 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    width: '630px',
+    height: '300px',
+    'border-radius': '7px',
+    padding: 0
   },
 };
 
@@ -143,7 +149,7 @@ export default function Home() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.statements}>
                       {columns.map((column) => {
                         const value = row[column.id as keyof Data];
                         return (
@@ -178,15 +184,21 @@ export default function Home() {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
+        <div>
+          <div className="container">
+            <div className="title">NEW APPLICATION</div>
+            <button onClick={closeModal} className="close-button">X</button>
+          </div>
+          <div className="form-container">
+            <div className="label">APP NUMBER</div>
+            <input className="input-box" />
+            <div className="description">First, let's start with the app number.</div>
+            <div className="button-container">
+              <button className="btn-new-application">CANCEL</button>
+              <button className="btn-new-application btn-new-application-start">START</button>
+            </div>
+          </div>
+        </div>
       </Modal>
     </>
   );
