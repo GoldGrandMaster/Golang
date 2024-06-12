@@ -28,10 +28,19 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": "hello world! THis is Golang!"})
 	})
+
+	/* User Authentication Router */
 	router.POST("/api/auth/register", controllers.CreateUser)
 	router.POST("/api/auth/login", controllers.LoginUser)
-	// router.Post("/api/pdf/create", controllers.)
-
 	router.GET("/user/profile", middlewares.CheckAuth, controllers.GetUserProfile)
+
+	/* Application Router */
+	router.POST("/api/app/create", controllers.CreateApp)
+	router.GET("/api/app/getlist", controllers.GetAppList)
+	router.GET("/api/app/get/:id", controllers.GetAppById)
+
+	/* Document Uploading */
+	router.POST("/api/upload", controllers.UploadDocument)
+
 	router.Run()
 }
