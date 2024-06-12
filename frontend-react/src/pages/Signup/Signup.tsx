@@ -7,14 +7,15 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { NavLink, useNavigate } from 'react-router-dom';
-import "./signup.css";
-import Axios from '../../config/axios';
+
 import { Alert } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
+import userAuthService from '../../services/userAuthService';
+import { IRegisterData } from '../../interface/interface';
 
 export default function SignUp() {
   const [error, setError] = React.useState("");
-  const { isLoggedIn, setUser, setTokens, setIsLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -25,13 +26,14 @@ export default function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const registerBody = {
+
+    const registerBody: IRegisterData = {
       email: data.get('email'),
       username: data.get('username'),
       password: data.get('password'),
     };
 
-    Axios.post('/auth/register', registerBody)
+    userAuthService.userRegister(registerBody)
       .then(res => {
         const { user } = res.data;
 

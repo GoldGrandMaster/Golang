@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { SnackbarProvider } from 'notistack'
+import { SnackbarProvider } from 'notistack';
+
+import './index.css';
+import './tailwind.css';
 
 const defaultTheme = createTheme();
 

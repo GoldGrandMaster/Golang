@@ -9,6 +9,7 @@ interface AuthContextType {
   isLoggedIn: boolean
   setIsLoggedIn: Function
   logout: Function
+  loading: boolean
 }
 
 export const authContext = createContext<AuthContextType>({
@@ -16,8 +17,9 @@ export const authContext = createContext<AuthContextType>({
   setUser: (e: User) => e,
   setTokens: (e: Tokens) => e,
   isLoggedIn: false,
-  setIsLoggedIn: () => { },
-  logout: () => { }
+  setIsLoggedIn: () => {},
+  logout: () => {},
+  loading: true
 });
 
 function isTokenExpired(token: string) {
@@ -40,6 +42,7 @@ function isTokenExpired(token: string) {
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const setTokens = (tokens: Tokens) => {
     // Axios.defaults.headers.common["Authorization"] = tokens.access.token;
@@ -58,9 +61,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const accessToken = localStorage.getItem("accessToken") || "";
     const refreshToken = localStorage.getItem("refreshToken") || "";
   
-
     if (accessToken && !isTokenExpired(accessToken)) {
-      return setIsLoggedIn(true);
+      setIsLoggedIn(true);
+      setLoading(false);
+      return;
     }
 
     Axios.post("/auth/login-jwt", null, {
@@ -83,7 +87,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <authContext.Provider value={{ user, setUser, setTokens, isLoggedIn, logout, setIsLoggedIn }}>
+    <authContext.Provider value={{ user, setUser, setTokens, isLoggedIn, logout, setIsLoggedIn, loading }}>
       {children}
     </authContext.Provider>
   )

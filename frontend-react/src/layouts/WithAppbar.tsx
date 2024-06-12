@@ -3,7 +3,7 @@ import AppAppBar from "../components/AppAppbar";
 
 export default function WithAppbar() {
   return <>
-    <AppAppBar />
+    <AppAppBar mode={"light"} />
     <Outlet />
   </>
 }

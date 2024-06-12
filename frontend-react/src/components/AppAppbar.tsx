@@ -21,10 +21,9 @@ const logoStyle = {
 
 interface AppAppBarProps {
   mode: PaletteMode;
-  toggleColorMode: () => void;
 }
 
-function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
+function AppAppBar({ mode }: AppAppBarProps) {
   const [open, setOpen] = React.useState(false);
 
   const { isLoggedIn, logout } = useAuth();
@@ -160,7 +159,6 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                 alignItems: 'center',
               }}
             >
-              <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
               { isLoggedIn
                 ? <>
                   <Button
@@ -226,7 +224,6 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                       flexGrow: 1,
                     }}
                   >
-                    <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   </Box>
                   <MenuItem onClick={() => scrollToSection('features')}>
                     Features

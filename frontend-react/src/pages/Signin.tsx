@@ -7,9 +7,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Axios from '../config/axios';
+
 import { Alert } from '@mui/material';
 import useAuth from '../hooks/useAuth';
+import { ILoginData } from '../interface/interface';
+import userAuthService from '../services/userAuthService';
 
 export default function SignIn() {
   const [error, setError] = useState("");
@@ -24,11 +26,11 @@ export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const loginBody = {
+    const loginBody: ILoginData = {
       user: data.get('user'),
       password: data.get('password'),
     };
-    Axios.post('/auth/login', loginBody)
+    userAuthService.userLogin(loginBody)
       .then(res => {
         const { user, token } = res.data;
         setUser(user);
